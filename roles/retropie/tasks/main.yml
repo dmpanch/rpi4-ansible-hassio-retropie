@@ -1,0 +1,51 @@
+---
+- name: Clone RetroPie repo
+  git:
+    repo: "{{retropie_git_url}}"
+    dest: "{{retropie_work_dir}}"
+    accept_hostkey: true
+    force: true
+    version: "master"
+
+- name: Chmod RetroPie
+  shell: "chmod +x retropie_setup.sh"
+  args:
+    chdir: "{{retropie_work_dir}}"
+  tags:
+    - retropie
+
+- name: Install and configure RetroPie
+  shell: "./retropie_packages.sh setup basic_install"
+  args:
+    chdir: "{{retropie_work_dir}}"
+  tags:
+    - retropie
+
+- name: Install PS3 controller driver and pair via sixad
+  shell: "./retropie_packages.sh ps3controller install"
+  args:
+    chdir: "{{retropie_work_dir}}"
+  tags:
+    - retropie
+
+- name: Install Standalone Steam Controller Driver
+  shell: "./retropie_packages.sh steamcontroller install"
+  args:
+    chdir: "{{retropie_work_dir}}"
+  tags:
+    - retropie
+
+- name: Install Web Based Manager for RetroPie files and configs based on the Recalbox Manager
+  shell: "./retropie_packages.sh retropie-manager install"
+  args:
+    chdir: "{{retropie_work_dir}}"
+  tags:
+    - retropie
+
+- name: Enable RetroPie running on boot
+  shell: "./retropie_packages.sh autostart enable"
+  args:
+    chdir: "{{retropie_work_dir}}"
+  tags:
+    - retropie
+  notify: Reboot Raspberry

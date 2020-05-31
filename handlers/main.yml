@@ -1,0 +1,8 @@
+---
+- name: Restart Docker
+  service: 
+    name: docker 
+    state: restarted
+
+- name: Reboot Raspberry
+  shell: "sleep 5 && reboot"

@@ -1,0 +1,20 @@
+---
+##@ref https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#variables-and-vaults
+
+#Docker
+
+docker_version: 5:19.03.8~3-0~raspbian-buster
+docker_install_compose: true
+docker_users: []
+docker_pip_executable: pip3
+
+#RetroPie
+
+retropie_git_url: "https://github.com/RetroPie/RetroPie-Setup.git"
+retropie_work_dir: /home/pi/RetroPie-Setup/
+chdir: "chdir={{retropie_work_dir}}"
+
+#Home Asssistant
+
+hassio_git_url: "https://github.com/dmpanch/hassio-rpi4-docker-compose"
+hassio_work_dir: /home/pi/hassio-rpi4-docker-compose/

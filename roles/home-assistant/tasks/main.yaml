@@ -1,0 +1,29 @@
+---
+- name: Clone Home Assistant repo
+  git:
+    repo: "{{hassio_git_url}}"
+    dest: "{{hassio_work_dir}}"
+    accept_hostkey: true
+    force: true
+    version: "master"
+
+- name: Create directories for Home Assistant
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  with_items:
+    - /home/pi/hassio/scripts
+    - /home/pi/hassio/data
+    - /home/pi/hassio/portainer
+  tags:
+    - hassio
+
+- name: Run Home Assistant
+  shell: "docker-compose up -d"
+  args:
+    chdir: "{{hassio_work_dir}}"
+  tags:
+    - hassio
